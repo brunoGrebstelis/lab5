@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"lab5","l":"Color"},{"p":"lab5","l":"Coordinates"},{"p":"lab5","l":"dataOperations"},{"p":"lab5","l":"Location"},{"p":"lab5","l":"mainLab5"},{"p":"lab5","l":"Person"},{"p":"lab5","l":"userimputs"}]
