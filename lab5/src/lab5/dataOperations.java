@@ -485,7 +485,7 @@ public class dataOperations {
 		 	String[] arr= null;
 		    List<String> scriptElements = new ArrayList<String>();
 
-		   
+		    	//FileInputStream fstream_school = new FileInputStream("script.txt"); 
 		        FileInputStream fstream_school = new FileInputStream(System.getenv("go_to_lab5_script_file")); 
 		        DataInputStream data_input = new DataInputStream(fstream_school); 
 		        BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
@@ -690,14 +690,24 @@ public class dataOperations {
 				arr[0]=m.getKey();	
 			}		
 		}
+		int cancel =0;
 		for(int i = 0; i<(showPersons2.size()-1);i++) {
 			for(Entry<Integer, Person> m:showPersons2.entrySet()){
 				Person a = m.getValue();
-				if(lastB.isBefore(a.FgetBirthday())&&lastB2.isAfter(a.FgetBirthday())) {
+				if(lastB.equals(a.FgetBirthday())&&arr[i]!=m.getKey()&&arr[i]<m.getKey()&&cancel==0) {
 					lastB2=a.FgetBirthday();
 					arr[i+1]=m.getKey();
+					cancel=1;
+					
+				}
+				if(lastB.isBefore(a.FgetBirthday())&&lastB2.isAfter(a.FgetBirthday())&&cancel==0) {
+					lastB2=a.FgetBirthday();
+					arr[i+1]=m.getKey();
+					//cancel=1;
+					
 				}
 			}
+			cancel=0;
 			lastB=lastB2;
 			lastB2=LocalDate.now();
 		}

@@ -272,7 +272,7 @@ public class userimputs {
 			  	if(arrKey.length>6) {
 			  		len=0;
 			  	}
-			  	//System.out.println(var);
+			  	System.out.println("|");
 			    for(int i =var; i<(arrKey.length); i++) {
 			    	System.out.println(arrKey[i]);
 			    }
