@@ -75,9 +75,9 @@ public class Remove {
 	}
 	
 	public void remove_birthsday() {
-		int year;
-		int day;
-		int month;
+		int year=0;
+		int day=0;
+		int month=0;
 		String birthsday;
 		InputStreamReader r2 = new InputStreamReader(System.in);
 		BufferedReader br2 = new BufferedReader(r2);
@@ -94,54 +94,43 @@ public class Remove {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					year = Integer.parseInt(keyWord2);
-					if (year > 1000 && year < 2022) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID year!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (year==0||year<1000||year>2022);
 
 		do {
 			System.out.println("Enter birth month!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					month = Integer.parseInt(keyWord2);
-					if (month > 0 && month <= 12) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID month!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (month==0||month<1||month>12);
 
 		do {
 			System.out.println("Enter birth date!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					day = Integer.parseInt(keyWord2);
-					if (day > 0 && day <= 31) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID date!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (day==0||day<1||day>31);
 
 		String month2 = Integer.toString(month);
 		String year2 = Integer.toString(year);
