@@ -14,60 +14,44 @@ import java.util.List;
  * @author bruno
  *
  */
+public class Userimputs {
 
-public class userimputs {
-	
-
-	String[] arrKey= null;
+	String[] arrKey;
     List<String> keyElements = new ArrayList<String>();
-	dataOperations data;
+	DataOperations data;
 	InputStream imput;
 	String keyWord;
 	
 	private int execute;
 	private int scriptlen=-1;
 	
-	userimputs(dataOperations data, InputStream imput){
+	Userimputs(DataOperations data, InputStream imput){
 		this.data=data;
 		this.imput=imput;
 	}
 	
-	public int getexecute() {
-		return execute;
-	}
-	
-	public void setexecute() {
-		this.execute=execute+1;
-	}
-	
-	public int getscriptlen() {
-		return scriptlen;
-	}
-	
-	public void setscriptlen() {
-		this.scriptlen=scriptlen+1;
-	}
 	
 	/**
 	 * This method is used to determine keyword
 	 * If function execute_script has been lounged then keyword is command from script file
 	 * If function execute_script has not been lounged then keyword is determined by input command 
 	 */
-	
 	public void entering() {
 		InputStreamReader r=new InputStreamReader(imput);    
-		BufferedReader br=new BufferedReader(r); 
+		BufferedReader br=new BufferedReader(r);
+		ExecuteScript exsc = new ExecuteScript();
 		System.out.println("________________________________________________________________");
 		System.out.println("Enter your key word");    
 
 		if(getexecute()>0) {
 			try {
 				setscriptlen();
-				keyWord=data.execute_script(getscriptlen());
-				if(getscriptlen()+1>=data.execute_script_lenght()) {
+				keyWord=exsc.execute_script(getscriptlen());
+				if(getscriptlen()+1>=exsc.execute_script_lenght()) {
 					execute=0;
 					scriptlen=0;
-				}								
+				}
+				System.out.println(keyWord);
 				this.entering2();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -78,17 +62,14 @@ public class userimputs {
 			keyWord = br.readLine();
 			this.entering2();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
-		//System.out.println("Welcome "+keyWord);
 		
 	}
 	
 	/**
 	 * This method is used to operate with user inputs and to run method from dataOperation class
-	 */
-		
+	 */	
 	public void entering2() {	
 		InputStreamReader r=new InputStreamReader(imput);    
 		BufferedReader br=new BufferedReader(r); 
@@ -99,22 +80,28 @@ public class userimputs {
 		switch(keyWord) {
 		
 		  case "show": 
-		    data.show();
+			PrintOut prSh = new PrintOut(data.getShowPersons2());
+			prSh.show();
 		    this.entering();
 		    break;
 		    
 		  case "help":
-			  data.help();
+			  PrintOut prHe = new PrintOut(data.getShowPersons2());
+			  prHe.help();
 			  this.entering();
 		    break;
 		    
 		  case "info":
-			  data.info();
+			  PrintOut prIn = new PrintOut(data.getShowPersons2());
+			  prIn.info();
 			  this.entering();
 		    break;
 		    
 		  case "insert":
-			  data.getPersonInfo(data.setID());
+			  IDoperations newinsert = new IDoperations(data.getShowPersons2());
+			  EnterNewPerson np = new EnterNewPerson(newinsert.setID());
+			  np.getPersonInfo();
+			  data.insert(np.getName(), np.getCord(), np.getHeight(), np.getID(), np.getPassportID(), np.getEyeColor(), np.getLocation(), np.getBirthsday());
 			  this.entering();
 		    break;
 		    
@@ -124,7 +111,6 @@ public class userimputs {
 			  try {
 				keyWord = br.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			   
@@ -138,7 +124,6 @@ public class userimputs {
 			  try {
 				keyWord = br.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  long last = Long.parseLong(keyWord);
@@ -149,11 +134,10 @@ public class userimputs {
 				  try {
 						keyWord = br.readLine();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				  
-				  if(data.test_if_ID_exist(Long.parseLong(keyWord))==1) {
+				  IDoperations newtest = new IDoperations(data.getShowPersons2());
+				  if(newtest.testIfIDExist(Long.parseLong(keyWord))==1) {
 					  break;
 				  }else {
 					  System.out.println("ID you entered already exist! Enter NEW!");
@@ -161,11 +145,11 @@ public class userimputs {
 			  }while(true);
 			  
 			  if(Long.parseLong(keyWord)>last) {
-				  //System.out.println("keyW: "+keyWord);
-				  //System.out.println("last: "+last);
-				  //data.update(Long.parseLong(keyWord));
-				  data.removeFun(last);
-				  data.getPersonInfo(Long.parseLong(keyWord));
+				  Remove remRIG = new Remove(data.getShowPersons2());
+				  remRIG.removeFun(last);
+				  EnterNewPerson rigp = new EnterNewPerson(Long.parseLong(keyWord));
+				  rigp.getPersonInfo();
+				  data.insert(rigp.getName(), rigp.getCord(), rigp.getHeight(), rigp.getID(), rigp.getPassportID(), rigp.getEyeColor(), rigp.getLocation(), rigp.getBirthsday());
 				  this.entering();
 			  }else {
 				System.out.println("New ID is not greater then last ID!");
@@ -178,11 +162,10 @@ public class userimputs {
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-			  data.removeFun(Long.parseLong(keyWord));
+			  Remove remRem = new Remove(data.getShowPersons2());
+			  remRem.removeFun(Long.parseLong(keyWord));
 			  this.entering();
 		    break;
 		    
@@ -191,16 +174,16 @@ public class userimputs {
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-			  data.remove_key(Integer.parseInt(keyWord));
+			  Remove remRemK = new Remove(data.getShowPersons2());
+			  remRemK.remove_key(Integer.parseInt(keyWord));
 			  this.entering();
 		    break;
 		    
 		  case "clear":
-			  data.clear();
+			  Remove remCl = new Remove(data.getShowPersons2());
+			  remCl.clear();
 			  this.entering();
 		    break;
 		     
@@ -209,23 +192,27 @@ public class userimputs {
 			  this.entering();
 		    break;
 		    
-		  case "print_ascending": 
-			  data.print_ascending();
+		  case "print_ascending":
+			  PrintOut prAs = new PrintOut(data.getShowPersons2());
+			  prAs.print_ascending();
 			  this.entering();
 		    break;
 		    
 		  case "print_field_descending_birthday": 
-			  data.print_field_descending_birthday();
+			  PrintOut prDe = new PrintOut(data.getShowPersons2());
+			  prDe.print_field_descending_birthday();
 			  this.entering();
 		    break;
 		    
 		  case "printb": 
-			  data.print_field_descending_birthday();
+			  PrintOut prDe2 = new PrintOut(data.getShowPersons2());
+			  prDe2.print_field_descending_birthday();
 			  this.entering();
 		    break;
 		    
 		  case "print": 
-			  data.print_ascending();
+			  PrintOut prAs2 = new PrintOut(data.getShowPersons2());
+			  prAs2.print_ascending();
 			  this.entering();
 		    break;
 		    
@@ -235,7 +222,8 @@ public class userimputs {
 		    break;
 		    
 		  case "remove_birthsday": 
-			  data.remove_birthsday();
+			  Remove remBi = new Remove(data.getShowPersons2());
+			  remBi.remove_birthsday();
 			  this.entering();
 		    break;
 		    
@@ -244,19 +232,18 @@ public class userimputs {
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-			  data.remove_greater(Long.parseLong(keyWord));
+			  Remove remGr = new Remove(data.getShowPersons2());
+			  remGr.remove_greater(Long.parseLong(keyWord));
 			  this.entering();
 		    break;
 		    
 		  case "save":
 			  try {
-				data.save();
+				Save newSave = new Save(data.getShowPersons2(),data.getEnvvariable());
+				newSave.save();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  System.out.println("Your data has been successfully SAVED");
@@ -287,8 +274,19 @@ public class userimputs {
 		}
 	}
 	
-
+	public int getexecute() {
+		return execute;
+	}
 	
+	public void setexecute() {
+		this.execute=execute+1;
+	}
 	
+	public int getscriptlen() {
+		return scriptlen;
+	}
 	
+	public void setscriptlen() {
+		this.scriptlen=scriptlen+1;
+	}	
 }

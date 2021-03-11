@@ -5,7 +5,6 @@ package lab5;
  * @author bruno
  *
  */
-
 public enum Color {
     GREEN,
     BLACK,

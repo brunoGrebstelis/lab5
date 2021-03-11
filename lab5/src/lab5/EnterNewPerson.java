@@ -15,22 +15,21 @@ public class EnterNewPerson {
 	
 	private String name;
 	private Coordinates coordinates;
-	private Double height;
 	private String passportID;
 	private Color eyeColor;
 	private Location location;
 	private String birthsday;
 	private long id;
-
-	private Double xcor;
-	private float ycor;
-	private Integer color;
-	private int xloc;
-	private long yloc;
-	private long zloc;
-	private int year;
-	private int day;
-	private int month;
+	private Double height=0d;
+	private Double xcor=0d;
+	private float ycor=0f;
+	private Integer color=0;
+	private int xloc=0;
+	private long yloc=0;
+	private long zloc=0;
+	private int year=0;
+	private int day=0;
+	private int month=0;
 	
 	EnterNewPerson(long id){
 		this.id = id;
@@ -71,7 +70,6 @@ public class EnterNewPerson {
 	
 	public void getPersonInfo() {
 
-		System.out.println("");
 		System.out.println("Do you realy want to make changes here? [yes/no]");
 		InputStreamReader r2 = new InputStreamReader(System.in);
 		BufferedReader br2 = new BufferedReader(r2);
@@ -81,26 +79,26 @@ public class EnterNewPerson {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (keyWord2.equals("yes")) {
+		if (keyWord2.equals("no")) {
+			System.out.println("restart to start again");
+			System.exit(0);
+			
+		} else {
 			do {
 				System.out.println("Enter name!");
 				try {
 					keyWord2 = br2.readLine();
 					name = keyWord2;
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 					
-			} while (keyWord2==null);
-		} else {
-			System.out.println("restart to start again");
-			System.exit(0);
+			} while (keyWord2.isEmpty());
 
 		}
-		System.out.println("Enter x coordinate!");
+		
 		do {
-			// System.out.println("Enter x coordinate!");
+			 System.out.println("Enter x coordinate!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -110,15 +108,14 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					xcor = Double.parseDouble(keyWord2);
-					break;
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID x coordinate!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (xcor==0);
 
-		System.out.println("Enter y coordinate!");
 		do {
+			System.out.println("Enter y coordinate!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -128,19 +125,18 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					ycor = Float.parseFloat(keyWord2);
-					break;
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID y coordinate!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (ycor==0);
 
 		Coordinates newCoordinates = new Coordinates((xcor), (ycor));
 		coordinates = newCoordinates;
 		// System.out.println("x: "+coordinates.getX()+"y: "+coordinates.getY());
 
-		System.out.println("Enter height!");
 		do {
+			System.out.println("Enter height!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -152,16 +148,15 @@ public class EnterNewPerson {
 				try {
 					if (Double.parseDouble(keyWord2) > 0) {
 						height = Double.parseDouble(keyWord2);
-						break;
 					} else {
-						System.out.println("Hight must be greater then 0! Enter again!");
+						System.out.print("Hight must be greater then 0! - ");
 					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID height!");
+					System.out.print("Value is NOT VALID - ");
 				}
 
 			}
-		} while (true);
+		} while (height==0);
 
 		do {
 			System.out.println("Enter passportID!");
@@ -174,9 +169,8 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				passportID = keyWord2;
 				// System.out.println(name);
-				break;
 			}
-		} while (true);
+		} while (passportID==null);
 
 		do {
 			System.out.println("Choose eay color 1-5 (" + Arrays.toString(Color.values()) + "): ");
@@ -196,13 +190,13 @@ public class EnterNewPerson {
 						break;
 					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID symbol!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (color==0||color<1||color>5);
 
-		System.out.println("Enter x location!");
 		do {
+			System.out.println("Enter x location!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -212,15 +206,14 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					xloc = Integer.parseInt(keyWord2);
-					break;
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID x location!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (xloc==0);
 
-		System.out.println("Enter y location!");
 		do {
+			System.out.println("Enter y location!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -230,15 +223,14 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					yloc = Long.parseLong(keyWord2);
-					break;
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID y location!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (yloc==0);
 
-		System.out.println("Enter z location!");
 		do {
+			System.out.println("Enter z location!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
@@ -248,12 +240,11 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					zloc = Long.parseLong(keyWord2);
-					break;
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID z location!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (zloc==0);
 
 		Location newLocation = new Location((xloc), (yloc), (zloc));
 		location = newLocation;
@@ -270,54 +261,43 @@ public class EnterNewPerson {
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					year = Integer.parseInt(keyWord2);
-					if (year > 1000 && year < 2022) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID year!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (year==0||year<1000||year>2022);
 
 		do {
 			System.out.println("Enter birth month!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					month = Integer.parseInt(keyWord2);
-					if (month > 0 && month <= 12) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID month!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (month==0||month<1||month>12);
 
 		do {
 			System.out.println("Enter birth date!");
 			try {
 				keyWord2 = br2.readLine();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (keyWord2 != null && !keyWord2.isEmpty()) {
 				try {
 					day = Integer.parseInt(keyWord2);
-					if (day > 0 && day <= 31) {
-						break;
-					}
 				} catch (NumberFormatException nfe) {
-					System.out.println("Enter VALID date!");
+					System.out.print("Value is NOT VALID - ");
 				}
 			}
-		} while (true);
+		} while (day==0||day<1||day>31);
 
 		String month2 = Integer.toString(month);
 		String year2 = Integer.toString(year);

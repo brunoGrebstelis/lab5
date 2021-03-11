@@ -10,7 +10,6 @@ public class Coordinates {
     private Double x; //Поле не может быть null
     private Float y; //Поле не может быть null
     
-    Coordinates() {}
     Coordinates(Double x, float y) {
         this.x = x;
         this.y = y;
@@ -20,7 +19,6 @@ public class Coordinates {
      * 
      * @return y coordinate
      */
-
     public float getY() {
         return y;
     }
@@ -29,7 +27,6 @@ public class Coordinates {
      * 
      * @return x coordinate
      */
-
     public Double getX() {
         return x;
     }
@@ -38,7 +35,6 @@ public class Coordinates {
      * coordinate object information
      * @return information
      */
-    
     public String getShow() {
     	return " Coordinates (" +getX()+ " " +getY()+")";
     }
