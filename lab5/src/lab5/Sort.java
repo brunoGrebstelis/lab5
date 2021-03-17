@@ -29,9 +29,6 @@ public class Sort {
 			}
 		}
 		
-		//if(showPersons3.size()==showPersons2.size()) {
-		//	break;
-		//}
 		}while(showPersons2.size()>showPersons3.size());
 
 		showPersons2.clear();

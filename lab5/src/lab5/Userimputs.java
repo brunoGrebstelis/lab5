@@ -16,12 +16,11 @@ import java.util.List;
  */
 public class Userimputs {
 
-	String[] arrKey;
-    List<String> keyElements = new ArrayList<String>();
-	DataOperations data;
-	InputStream imput;
-	String keyWord;
-	
+	private String[] arrKey;
+    private List<String> keyElements = new ArrayList<String>();
+	private DataOperations data;
+	private InputStream imput;
+	private String keyWord;
 	private int execute;
 	private int scriptlen=-1;
 	
@@ -106,78 +105,122 @@ public class Userimputs {
 		    break;
 		    
 		 case "update":
+			 long updateId=0;
+			  do {
 			  System.out.println("Enter ID");
-			  
 			  try {
-				keyWord = br.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+					keyWord = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			  if (keyWord != null && !keyWord.isEmpty()) {
+				  try {
+					  updateId =Long.parseLong(keyWord);
+					} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+					}
+			  }
+			  }while(updateId == 0);
 			   
-			  data.update(Long.parseLong(keyWord));
+			  data.update(updateId);
 			  this.entering();
 		 break;
 		 
 		 case "replace_if_greater":
-			  System.out.println("Enter ID");
-			  
-			  try {
-				keyWord = br.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			  long last = Long.parseLong(keyWord);
-			  System.out.println("Enter NEW ID");
-			  
-			  
-			  do {
-				  try {
-						keyWord = br.readLine();
+			long last=0;
+			long newIDelement = 0;
+			do {
+				System.out.println("Enter ID");
+				try {
+					keyWord = br.readLine();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				  IDoperations newtest = new IDoperations(data.getShowPersons2());
-				  if(newtest.testIfIDExist(Long.parseLong(keyWord))==1) {
-					  break;
-				  }else {
-					  System.out.println("ID you entered already exist! Enter NEW!");
-				  }
-			  }while(true);
-			  
-			  if(Long.parseLong(keyWord)>last) {
-				  Remove remRIG = new Remove(data.getShowPersons2());
-				  remRIG.removeFun(last);
-				  EnterNewPerson rigp = new EnterNewPerson(Long.parseLong(keyWord));
-				  rigp.getPersonInfo();
-				  data.insert(rigp.getName(), rigp.getCord(), rigp.getHeight(), rigp.getID(), rigp.getPassportID(), rigp.getEyeColor(), rigp.getLocation(), rigp.getBirthsday());
-				  this.entering();
-			  }else {
-				System.out.println("New ID is not greater then last ID!");
-			    this.entering();
-			  }
+					if (keyWord != null && !keyWord.isEmpty()) {
+					try {
+					  	last =Long.parseLong(keyWord);
+					} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+					}
+					}
+			}while(last == 0);
+			
+			do {
+				System.out.println("Enter NEW ID");
+				try {
+					keyWord = br.readLine();
+				} catch (IOException e) {
+						e.printStackTrace();
+				}
+				if (keyWord != null && !keyWord.isEmpty()) {
+				try {
+					newIDelement =Long.parseLong(keyWord);
+				} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+				}
+				}
+				if(newIDelement>last) {
+					IDoperations newtest = new IDoperations(data.getShowPersons2());
+					if(newtest.testIfIDExist(Long.parseLong(keyWord))==1) {
+						Remove remRIG = new Remove(data.getShowPersons2());
+						remRIG.removeFun(last);
+						EnterNewPerson rigp = new EnterNewPerson(Long.parseLong(keyWord));
+						rigp.getPersonInfo();
+						data.insert(rigp.getName(), rigp.getCord(), rigp.getHeight(), rigp.getID(), rigp.getPassportID(), rigp.getEyeColor(), rigp.getLocation(), rigp.getBirthsday());
+					}else {
+						newIDelement = 0;
+						System.out.print("ID you entered already exist! - ");
+					}
+				}else {
+					newIDelement = 0;
+					System.out.print("New ID is not greater then last ID! - ");
+				}
+			}while(newIDelement == 0);
+			this.entering();
 		 break;
 			 
 		  case "remove":
+			  long remElem=0;
+			  do {
 			  System.out.println("Enter ID");
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			  if (keyWord != null && !keyWord.isEmpty()) {
+				  try {
+					  remElem =Long.parseLong(keyWord);
+					} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+					}
+			  }
+			  }while(remElem == 0);
 			  Remove remRem = new Remove(data.getShowPersons2());
-			  remRem.removeFun(Long.parseLong(keyWord));
+			  remRem.removeFun(remElem);
 			  this.entering();
 		    break;
 		    
 		  case "remove_key":
-			  System.out.println("Enter key");
+			  int remKey=-1;
+			  do {
+			  System.out.println("Enter Key");
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			  if (keyWord != null && !keyWord.isEmpty()) {
+				  try {
+					  remKey =Integer.parseInt(keyWord);
+					} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+					}
+			  }
+			  }while(remKey == -1);
+			  
 			  Remove remRemK = new Remove(data.getShowPersons2());
-			  remRemK.remove_key(Integer.parseInt(keyWord));
+			  remRemK.remove_key(remKey);
 			  this.entering();
 		    break;
 		    
@@ -227,13 +270,23 @@ public class Userimputs {
 			  this.entering();
 		    break;
 		    
-		  case "remove_greater": 
+		  case "remove_greater":
+			  long keyVal=0;
+			  do {
 			  System.out.println("Enter greates key from witch you want to remove!");
 			  try {
 					keyWord = br.readLine();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			  if (keyWord != null && !keyWord.isEmpty()) {
+				  try {
+						keyVal =Long.parseLong(keyWord);
+					} catch (NumberFormatException nfe) {
+						System.out.print("Value is NOT VALID - ");
+					}
+			  }
+			  }while(keyVal == 0);
 			  Remove remGr = new Remove(data.getShowPersons2());
 			  remGr.remove_greater(Long.parseLong(keyWord));
 			  this.entering();

@@ -26,7 +26,6 @@ public class Save {
 
 		PrintWriter writer = new PrintWriter(envvariable);
 		writer.print("");
-		// other operations
 		writer.close();
 
 		PrintWriter out = null;

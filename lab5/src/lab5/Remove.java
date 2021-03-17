@@ -74,6 +74,7 @@ public class Remove {
 		count = 0;
 	}
 	
+	
 	public void remove_birthsday() {
 		int year=0;
 		int day=0;

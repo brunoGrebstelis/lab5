@@ -26,7 +26,7 @@ public class ExecuteScript {
 
 		List<String> scriptElements = new ArrayList<String>();
 
-		// FileInputStream fstream_school = new FileInputStream("script.txt");
+		//FileInputStream fstream_school = new FileInputStream("script.txt");
 		FileInputStream fstream_school = new FileInputStream(System.getenv("GoToLab5ScriptFile"));
 		DataInputStream data_input = new DataInputStream(fstream_school);
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input));
